@@ -5,16 +5,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		load_qr()
 	})
 
-	document.getElementById("close").onclick = () => {
+	document.querySelector("#close").onclick = () => {
 		window.close()
 	}
 
-	document.getElementById("textbox").onchange = () => {
+	document.querySelector("#textbox").onchange = () => {
 		load_qr()
 	}
 
-	document.getElementById("textbox").onkeyup = () => {
+	document.querySelector("#textbox").onkeyup = () => {
 		load_qr()
+	}
+
+	document.querySelector("#download").onclick = () => {
+		//todo change file name to url?
+		download("qr_code.gif", document.querySelector("#qrcode img").src);
 	}
 
 })
@@ -25,7 +30,20 @@ function load_qr () {
 	let max_qrcode_height = max_window_height - 75 // Reserve "some" space for UI
 
 	let qr = qrcode(0, "M")
-	qr.addData(document.getElementById("textbox").value)
+	qr.addData(document.querySelector("#textbox").value)
 	qr.make()
-	document.getElementById("qrcode").innerHTML = qr.createImgTag(Math.floor(max_qrcode_height / 57), 4)
+	document.querySelector("#qrcode").innerHTML = qr.createImgTag(Math.floor(max_qrcode_height / 57), 4)
+}
+
+function download(filename, text) {
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	element.setAttribute('download', filename);
+  
+	element.style.display = 'none';
+	document.body.appendChild(element);
+  
+	element.click();
+  
+	document.body.removeChild(element);
 }
