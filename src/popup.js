@@ -29,6 +29,7 @@ function load_qr () {
 	let max_window_height = 600
 	let max_qrcode_height = max_window_height - 75 // Reserve "some" space for UI
 
+	//todo add option for L M H Q?
 	let qr = qrcode(0, "M")
 	qr.addData(document.querySelector("#textbox").value)
 	qr.make()
